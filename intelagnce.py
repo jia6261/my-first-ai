@@ -1,3 +1,7 @@
+import re
+import random
+import time
+
 responses = {
     # Basic Greetings
     r'\b(hello|hi|hey)\b': [
@@ -57,7 +61,7 @@ def get_bot_response(user_input):
             chosen_response = random.choice(response_list)
             
             if "{current_time}" in chosen_response:
-                # Add logic here to fetch real-time info
+                # Fetch real-time info
                 current_time = time.strftime("%H:%M:%S", time.localtime())
                 return chosen_response.format(current_time=current_time)
             
@@ -65,3 +69,13 @@ def get_bot_response(user_input):
             
     # Default response if no pattern matches
     return "I don't understand that yet. Can you rephrase or ask something else?"
+
+if __name__ == '__main__':
+    # Simple test loop for the module itself
+    print("--- intelagnce.py Test Mode ---")
+    while True:
+        user_input = input("You: ")
+        if user_input.lower() in ['bye', 'exit', 'quit', 'goodbye']:
+            print("Bot: Goodbye!")
+            break
+        print(f"Bot: {get_bot_response(user_input)}")
