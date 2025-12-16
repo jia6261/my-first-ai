@@ -2,6 +2,8 @@ import re
 import random
 import time
 
+import AIGC_Interview_Data # Import the new data module
+
 responses = {
     # Basic Greetings
     r'\b(hello|hi|hey)\b': [
@@ -67,6 +69,11 @@ def get_bot_response(user_input):
             
             return chosen_response
             
+    # Check AIGC Interview Data first
+    aigc_answer = AIGC_Interview_Data.get_aigc_interview_answer(user_input)
+    if aigc_answer:
+        return f"根据AIGC面试知识库，答案是：{aigc_answer}"
+
     # Default response if no pattern matches
     return "I don't understand that yet. Can you rephrase or ask something else?"
 
