@@ -1,0 +1,63 @@
+import time
+import random
+import re # Import the regular expression module for more flexible matching
+inport intelagnce# Initial simple prints (Keep these separate from the main chat logic)
+print("hello")
+time.sleep(0.5) # Shortened sleep times for better user experience
+print("i was your ai")
+time.sleep(0.5)
+print("so tell me a question")
+
+# --- Expanded Chat Logic and Data Structures ---
+
+# We'll use a slightly more structured approach for easier expansion.
+# Keys are patterns/keywords, values are lists of potential bot responses.
+
+def get_bot_response(user_input):
+    """Checks user input against patterns and returns a response."""
+    user_input_lower = user_input.lower()
+    
+    for pattern, response_list in responses.items():
+        # Use re.search to find the pattern anywhere in the input string
+        if re.search(pattern, user_input_lower):
+            # Handle special dynamic responses (e.g., time)
+            chosen_response = random.choice(response_list)
+            
+            if "{current_time}" in chosen_response:
+                # Add logic here to fetch real-time info
+                current_time = time.strftime("%H:%M:%S", time.localtime())
+                return chosen_response.format(current_time=current_time)
+            
+            return chosen_response
+            
+    # Default response if no pattern matches
+    return "I don't understand that yet. Can you rephrase or ask something else?"
+
+# --- Main Chat Loop ---
+
+print("\nChatbot: Hi! I am an expanded Python chatbot. How can I help you today?")
+
+while True:
+    try:
+        # Get input from the user
+        user_input = input("You: ")
+        
+        if not user_input.strip(): # Prevents error if user just hits enter
+            continue
+            
+        bot_response = get_bot_response(user_input)
+        print(f"Chatbot: {bot_response}")
+
+        # Exit the loop if the response indicates an exit command was matched
+        # (A more robust way would be checking the input again, but this works for now)
+        if any(cmd in user_input.lower() for cmd in ['bye', 'exit', 'quit', 'goodbye']):
+            break
+
+    except EOFError:
+        # Handle cases where input stream is closed unexpectedly
+        print("\nChatbot: Connection closed. Goodbye!")
+        break
+    except KeyboardInterrupt:
+        # Handle user pressing Ctrl+C
+        print("\nChatbot: Chat terminated by user. Goodbye!")
+        break
